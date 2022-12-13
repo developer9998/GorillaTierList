@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GorillaNetworking;
 using GorillaTierList.Patches;
 using GorillaTierList.Scripts;
 
@@ -20,6 +21,8 @@ namespace GorillaTierList
         public List<Canvas> DropperCanvases = new List<Canvas>();
         public List<Transform> Droppers = new List<Transform>();
         public List<Transform> HandCanvases = new List<Transform>();
+        public Transform ReturnDropper;
+        public Transform ReturnCollider;
 
         // Objects
         public GameObject tierObject;
@@ -40,6 +43,17 @@ namespace GorillaTierList
         {
             Instance = this;
             HarmonyPatches.ApplyHarmonyPatches();
+        }
+
+        public CosmeticsController.CosmeticItem GetItemFromName(string str)
+        {
+            if (CosmeticsController.instance.allCosmeticsItemIDsfromDisplayNamesDict.ContainsKey(str))
+            {
+                string value = CosmeticsController.instance.allCosmeticsItemIDsfromDisplayNamesDict[str];
+                if (CosmeticsController.instance.allCosmeticsDict.ContainsKey(value)) return CosmeticsController.instance.allCosmeticsDict[value];
+            }
+
+            return CosmeticsController.instance.nullItem;
         }
 
         internal void Reload()
@@ -95,6 +109,22 @@ namespace GorillaTierList
                         clonedOption.GetComponentInChildren<RawImage>().texture = signTexture;
                         clonedOption.GetComponentInChildren<RawImage>().color = Color.white;
                     }
+                    else
+                    {
+                        string replacedOption = option.Replace("(", "").Replace(")", "");
+                        if (option.Length != replacedOption.Length)
+                        {
+                            var item = GetItemFromName(replacedOption.ToUpper());
+                            if (!item.isNullItem)
+                            {
+                                var sprite = item.itemPicture;
+                                clonedOption.GetComponentInChildren<Text>().enabled = false;
+                                clonedOption.GetComponentInChildren<Text>().text = replacedOption;
+                                clonedOption.Find("Image").GetComponent<Image>().sprite = sprite;
+                                clonedOption.Find("Image").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                            }
+                        }
+                    }
                 }
 
                 BaseDropper.gameObject.SetActive(false);
@@ -137,6 +167,8 @@ namespace GorillaTierList
             rc.GetComponent<Collider>().isTrigger = true;
             rc.AddComponent<Reload>();
 
+            ReturnCollider = tierObject.transform.Find("BaseTierEntry");
+
             foreach (var canv in tierObject.transform.GetComponentsInChildren<Canvas>())
             {
                 if (canv.name != "TierNames" && canv.name != "TierHeader" && canv.name != "ReloadText")
@@ -155,47 +187,12 @@ namespace GorillaTierList
                     }
                 }
 
+                if (canv.name == "TierStorage") ReturnDropper = canv.transform;
                 if (canv.name == "TierHeader") canv.GetComponentInChildren<Text>().text = TierData.CurrentData.DropperName;
             }
 
-            if (BaseDropper != null)
-            {
-                refObject = Instantiate(BaseDropper.gameObject);
-                refObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
-                refObject.GetComponentInChildren<RawImage>().color = new Color(1, 1, 1, 0f);
-                refObject.transform.localPosition = Vector3.zero;
-                refObject.transform.localRotation = Quaternion.identity;
-                refObject.transform.localScale = Vector3.one;
-
-                System.Random randomChance = new System.Random();
-                var shuffledDropperNames = TierData.CurrentData.DropperNames.OrderBy(a => randomChance.Next()).ToList();
-
-                foreach (var option in shuffledDropperNames)
-                {
-                    Transform clonedOption = Instantiate(BaseDropper).transform;
-                    Droppers.Add(clonedOption);
-                    clonedOption.transform.SetParent(BaseDropper.parent, false);
-                    clonedOption.GetComponentInChildren<Text>().text = option;
-                    clonedOption.gameObject.AddComponent<Rating>();
-                    clonedOption.GetComponentInChildren<RawImage>().color = new Color(1, 1, 1, 0);
-
-                    string imagePath = Path.Combine(Path.GetDirectoryName(typeof(Plugin).Assembly.Location), $"{option}.png");
-                    if (File.Exists(imagePath))
-                    {
-                        Texture2D signTexture = new Texture2D(128, 128, TextureFormat.RGBA32, false);
-                        signTexture.filterMode = FilterMode.Point;
-
-                        signTexture.LoadImage(File.ReadAllBytes(imagePath));
-                        signTexture.Apply();
-
-                        clonedOption.GetComponentInChildren<Text>().enabled = false;
-                        clonedOption.GetComponentInChildren<RawImage>().texture = signTexture;
-                        clonedOption.GetComponentInChildren<RawImage>().color = new Color(1, 1, 1, 1);
-                    }
-                }
-
-                BaseDropper.gameObject.SetActive(false);
-            }
+            // to make it a bit more consistent and to fix some issues 
+            Reload();
         }
 
         public Transform GetNearest(bool l)

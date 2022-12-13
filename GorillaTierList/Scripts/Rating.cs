@@ -25,6 +25,7 @@ namespace GorillaTierList.Scripts
             {
                 Transform target = Plugin.Instance.DropperCanvases[Plugin.Instance.DropperCanvases.Count - 1].transform;
                 if (Plugin.Instance.GetNearest(IsInLeftHand) != null && Plugin.Instance.GetNearest(IsInLeftHand).childCount != 9 && Vector3.Distance(Player.Instance.bodyCollider.transform.position, Plugin.Instance.tierObject.transform.position) <= 4) target = Plugin.Instance.GetNearest(IsInLeftHand);
+                if (Vector3.Distance(Player.Instance.bodyCollider.transform.position, Plugin.Instance.ReturnDropper.transform.position) <= 2.25f) target = Plugin.Instance.DropperCanvases[Plugin.Instance.DropperCanvases.Count - 1].transform;
                 refObject.transform.SetParent(target, false);
                 refObject.transform.localScale = Vector3.one;
             }
