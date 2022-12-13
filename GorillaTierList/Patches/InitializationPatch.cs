@@ -16,7 +16,8 @@ namespace GorillaTierList.Patches
             yield return 0;
             yield return new WaitForSeconds(2);
 
-            Plugin.Instance.OnInitialized();
+            if (Plugin.Instance.Initialized) Plugin.Instance.Reload();
+            else Plugin.Instance.OnInitialized();
         }
     }
 
