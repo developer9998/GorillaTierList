@@ -1,5 +1,6 @@
 # GorillaTierList
-GorillaTierList is a mod that adds a tierlist to the game. 
+GorillaTierList is a mod that adds a tierlist to the game.    
+Video Tutorial: https://youtu.be/AQ-w3VG_lYA
 
 # Credits
 Font: [dafont.com](https://www.dafont.com/bit-cell.font)   
