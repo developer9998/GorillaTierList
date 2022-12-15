@@ -23,8 +23,8 @@ For images, you need to add a PNG image in the same folder with the text file wi
 | DevIsntSilly | devisntsilly.png| No             |
 | IAmSo Silly  | IAmSo Silly.png | Yes            |
 
-If you're doing a cosmetic tierlist or an option for a tierlist that is a cosmetic, there is a built in feature that sets the image to that cosmetic name if it can't find an image of that cosmetic in your files. This only works if there is brackets around the option and the option is a valid cosmetic name registered by Gorilla Tag. This does not need you to require the perfect capitalization, it can be lowercase or uppercase and it would still work. For instance here is a table of option names as well as if the image would be automatically set, we're using the ``TURKEY LEG`` as an example.
-**NOTE: Some of the valid cosmetic names Gorilla Tag has are weird such as the headphone's being ``HEADPHONES1`` and such.
+If you're doing a cosmetic tierlist or an option for a tierlist that is a cosmetic, there is a built in feature that sets the image to that cosmetic name if it can't find an image of that cosmetic in your files. This only works if there is brackets around the option and the option is a valid cosmetic name registered by Gorilla Tag. This does not need you to require the perfect capitalization, it can be lowercase or uppercase and it would still work. For instance here is a table of option names as well as if the image would be automatically set, we're using the ``TURKEY LEG`` as an example.     
+**NOTE: Some of the valid cosmetic names Gorilla Tag has are weird such as the headphone's being ``HEADPHONES1`` and such.**
 | Option Name  | Would it work? |
 | ------------ | -------------- |
 | (Turkey Leg) | Yes            |
