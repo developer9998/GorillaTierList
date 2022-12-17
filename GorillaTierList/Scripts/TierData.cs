@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using GorillaTierList.Models;
-using WebSocketSharp;
 
 namespace GorillaTierList.Scripts
 {
@@ -15,11 +14,8 @@ namespace GorillaTierList.Scripts
         public static void LoadData()
         {
             CurrentData = new DropperData();
-            if (FilePath.IsNullOrEmpty())
-            {
-                FilePath = Path.Combine(Path.GetDirectoryName(typeof(Plugin).Assembly.Location), "TierConfig.txt");
-                if (!File.Exists(FilePath)) SaveData();
-            }
+            FilePath = Path.Combine(Path.GetDirectoryName(typeof(Plugin).Assembly.Location), "TierConfig.txt");
+            if (!File.Exists(FilePath)) SaveData();
 
             List<string> tempString = File.ReadAllLines(FilePath).ToList<string>();
             if (tempString.Count < 2 || tempString.Count > 30) return; // leave it at that
