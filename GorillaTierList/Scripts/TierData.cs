@@ -18,7 +18,7 @@ namespace GorillaTierList.Scripts
             if (!File.Exists(FilePath)) SaveData();
 
             List<string> tempString = File.ReadAllLines(FilePath).ToList<string>();
-            if (tempString.Count < 2 || tempString.Count > 30) return; // leave it at that
+            if (tempString.Count < 2) return; // leave it at that
 
             CurrentData.DropperNames.Clear();
             CurrentData.DropperName = tempString[0];

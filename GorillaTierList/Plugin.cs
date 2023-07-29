@@ -9,6 +9,10 @@ using GorillaNetworking;
 using GorillaTierList.Patches;
 using GorillaTierList.Scripts;
 
+// Credit:
+// https://freesound.org/s/576113/
+// https://freesound.org/s/327737/
+
 namespace GorillaTierList
 {
     [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
@@ -30,9 +34,9 @@ namespace GorillaTierList
         public GameObject refObject;
 
         // Audio
-        public AudioClip Pick; // freesound.org/s/576113/
-        public AudioClip Drop; // freesound.org/s/576113/
-        public AudioClip DropError; // freesound.org/s/327737/
+        public AudioClip 
+            Pick, Drop,
+            DropError;
 
         // Data
         public bool InLeftHand;
@@ -198,7 +202,7 @@ namespace GorillaTierList
         public Transform GetNearest(bool l)
         {
             Transform tr = null;
-            Transform findObject = l ? GorillaLocomotion.Player.Instance.leftHandFollower.transform : GorillaLocomotion.Player.Instance.rightHandFollower.transform;
+            Transform findObject = l ? GorillaLocomotion.Player.Instance.leftControllerTransform.transform : GorillaLocomotion.Player.Instance.rightControllerTransform.transform;
             List<Canvas> reverse = Enumerable.Reverse(DropperCanvases).ToList();
             foreach (Canvas go in reverse) if ((go.transform.position.y - 0.2f) <= findObject.transform.position.y) tr = go.transform;
 
