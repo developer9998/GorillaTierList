@@ -3,22 +3,32 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using GorillaTierList.Models;
+using System.Threading.Tasks;
+using UnityEngine;
 
-namespace GorillaTierList.Scripts
+namespace GorillaTierList
 {
-    public class TierData
+    public class TierParse
     {
-        public static DropperData CurrentData { get; set; }
-        public static string FilePath { get; set; } 
+        public static TierData CurrentData { get; set; }
+        private static string FilePath;
 
-        public static void LoadData()
+        public static async Task LoadData()
         {
-            CurrentData = new DropperData();
+            CurrentData = new TierData();
             FilePath = Path.Combine(Path.GetDirectoryName(typeof(Plugin).Assembly.Location), "TierConfig.txt");
-            if (!File.Exists(FilePath)) SaveData();
 
-            List<string> tempString = File.ReadAllLines(FilePath).ToList<string>();
-            if (tempString.Count < 2) return; // leave it at that
+            // Create our data if it already doesn't exist
+            if (!File.Exists(FilePath)) await SaveData();
+
+            var asyncList = await File.ReadAllLinesAsync(FilePath);
+            List<string> tempString = asyncList.ToList();
+
+            if (tempString.Count < 2)
+            {
+                Debug.LogWarning("Tierlist must contain a header and at least one option");
+                return;
+            }
 
             CurrentData.DropperNames.Clear();
             CurrentData.DropperName = tempString[0];
@@ -26,7 +36,7 @@ namespace GorillaTierList.Scripts
 
             for (int i = 0; i < tempString.Count; i++)
             {
-                if (i != 0 && i <= 31)
+                if (i != 0 && i <= 48)
                 {
                     string name = tempString[i];
                     if (name.Length >= 61) name.Substring(0, 60);
@@ -35,11 +45,11 @@ namespace GorillaTierList.Scripts
             }
         }
 
-        public static void SaveData()
+        public static async Task SaveData()
         {
             string OutputtedList = string.Join(Environment.NewLine, CurrentData.DropperNames);
             string OutputtedText = $"{CurrentData.DropperName}\n{OutputtedList}";
-            File.WriteAllText(FilePath, OutputtedText);
+            await File.WriteAllTextAsync(FilePath, OutputtedText);
         }
     }
 }
