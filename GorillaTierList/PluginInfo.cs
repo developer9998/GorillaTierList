@@ -3,8 +3,8 @@
     public class PluginInfo
     {
         public const string 
-            GUID = "dev.gorillatierlist",
+            GUID = "dev.zlothfix.gorillatierlist",
             Name = "GorillaTierList",
-            Version = "1.1.0";
+            Version = "1.2.0";
     }
 }
