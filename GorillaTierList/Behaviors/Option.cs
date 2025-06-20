@@ -24,8 +24,8 @@ namespace GorillaTierList.Behaviors
             if (refObject != null)
             {
                 var nearest = Main.Instance.GetNearest(IsInLeftHand);
-                Transform target = (nearest != null && Vector3.Distance(Player.Instance.bodyCollider.transform.position, Main.Instance.tierObject.transform.position) <= 8f) 
-                    ? ((Vector3.Distance(Player.Instance.bodyCollider.transform.position, Main.Instance.ReturnDropper.transform.position) <= 1.6f) 
+                Transform target = (nearest != null && Vector3.Distance(GTPlayer.Instance.bodyCollider.transform.position, Main.Instance.tierObject.transform.position) <= 8f) 
+                    ? ((Vector3.Distance(GTPlayer.Instance.bodyCollider.transform.position, Main.Instance.ReturnDropper.transform.position) <= 1.6f) 
                         ? Main.Instance.DropperCanvases[0].transform 
                         : nearest) 
                     : Main.Instance.DropperCanvases[0].transform;
@@ -34,7 +34,7 @@ namespace GorillaTierList.Behaviors
             }
 
             bool leftHandDown = ControllerInputPoller.instance.leftControllerIndexFloat > 0.5f;
-            bool shouldBeInLeftHand = leftHandDown && Vector3.Distance(Player.Instance.leftControllerTransform.transform.position, gameObject.transform.position) < 0.2f;
+            bool shouldBeInLeftHand = leftHandDown && Vector3.Distance(GTPlayer.Instance.leftControllerTransform.transform.position, gameObject.transform.position) < 0.2f;
             if (!InHand && !Main.Instance.InLeftHand && shouldBeInLeftHand)
             {
                 InHand = true;
@@ -55,7 +55,7 @@ namespace GorillaTierList.Behaviors
             }
 
             bool rightHandDown = ControllerInputPoller.instance.rightControllerIndexFloat > 0.5f;
-            bool shouldBeInRightHand = rightHandDown && Vector3.Distance(Player.Instance.rightControllerTransform.transform.position, gameObject.transform.position) < 0.2f;
+            bool shouldBeInRightHand = rightHandDown && Vector3.Distance(GTPlayer.Instance.rightControllerTransform.transform.position, gameObject.transform.position) < 0.2f;
             if (!InHand && !Main.Instance.InRightHand && shouldBeInRightHand)
             {
                 InHand = true;
@@ -134,7 +134,7 @@ namespace GorillaTierList.Behaviors
                     Destroy(refObject);
                 }
                 // Drop (When you get too far away from the tier list object)
-                if (Vector3.Distance(Player.Instance.bodyCollider.transform.position, Main.Instance.tierObject.transform.position) >= 5)
+                if (Vector3.Distance(GTPlayer.Instance.bodyCollider.transform.position, Main.Instance.tierObject.transform.position) >= 5)
                 {
                     if (refObject == null) return;
   

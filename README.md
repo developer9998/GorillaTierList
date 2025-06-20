@@ -2,6 +2,9 @@
 GorillaTierList is a mod that adds a tierlist to the game.    
 Video Tutorial: https://youtu.be/AQ-w3VG_lYA
 
+![Photo_25_06-20_19_20_05_36](https://github.com/user-attachments/assets/5c700508-3d4a-4e0f-b8b6-3dabaa1e1570)
+![Photo_25_06-20_19_22_02_13](https://github.com/user-attachments/assets/5ed94841-1a84-4b3d-9696-9ab3d3185da3)
+
 ## Format 
 The tierlist is customizeable with a file in your Plugins folder after you open your game with the mod. The first line is the title, and everything after is the options you can drag onto the tierlist. For instance, below this text is the default tierlist.   
 **NOTE: The title has a maximum character count of 22, and the option has a maximum character count of 61.**
