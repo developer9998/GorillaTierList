@@ -94,10 +94,12 @@ namespace GorillaTierList.Behaviors
             HandCanvases[1].transform.localRotation = Quaternion.Euler(-5.06f, -176.021f, 1.917f);
             HandCanvases[1].transform.localScale = new Vector3(1, 1, 1);
 
+
+            //Moved to above the cosmetic checkout and made slightly smaller - https://imgur.com/84278b81-447c-4d53-a60c-890e84efe3e5
             tierObject = Instantiate(await LoadAsset<GameObject>("TierArea"));
-            tierObject.transform.position = new Vector3(-54.987f, 18.183f, -113.913f);
-            tierObject.transform.rotation = Quaternion.Euler(0, 120.112f, 0.0009918213f);
-            tierObject.transform.localScale = new Vector3(0.4781441f, 0.4781441f, 0.478144f);
+            tierObject.transform.position = new Vector3(-66.6700f, 18.85f, - 114.1173f);
+            tierObject.transform.rotation = Quaternion.Euler(0, -60.112f, 0.0009918213f);
+            tierObject.transform.localScale = new Vector3(0.4381441f, 0.4381441f, 0.438144f);
 
             GameObject rc = tierObject.transform.Find("ReloadCube").gameObject;
             rc.layer = 18;
@@ -214,8 +216,8 @@ namespace GorillaTierList.Behaviors
         public Transform GetNearest(bool isLeftHand)
         {
             Transform findObject = isLeftHand 
-                ? Player.Instance.leftHandFollower.transform 
-                : Player.Instance.rightHandFollower.transform;
+                ? GTPlayer.Instance.leftHandFollower.transform 
+                : GTPlayer.Instance.rightHandFollower.transform;
 
             var temporaryCanvas = DropperCanvases.LastOrDefault(a => (a.transform.position.y - 0.2f) < findObject.transform.position.y);
             return temporaryCanvas?.transform;

@@ -1,6 +1,9 @@
 ﻿using BepInEx;
 using System.Reflection;
 using HarmonyLib;
+using GorillaTierList.Behaviors;
+using System.Threading.Tasks;
+using System;
 
 namespace GorillaTierList
 {
@@ -11,6 +14,9 @@ namespace GorillaTierList
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             new Harmony(PluginInfo.GUID).PatchAll(assembly);
+           
         }
+        
+       
     }
 }
